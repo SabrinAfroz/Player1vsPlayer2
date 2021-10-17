@@ -7,11 +7,11 @@ const p2BtnElm = document.querySelector('.p2');
 const p2ScoreElm = document.querySelector('.p2Score');
 const restBtnElm = document.querySelector('.reset');
 
-let winScore = 20;
+let winScore = 0;
 let p1Score = 0;
 let p2Score = 0;
 let turn = 'player1';
-let turn1 = 'player2';
+let turn2 = 'player2';
 
 winScoreElm.textContent = winScore;
 p1ScoreElm.textContent = p1Score;
@@ -30,12 +30,15 @@ formElm.addEventListener('submit', e => {
         if (!document.querySelector('.invalid-input')) {
             formElm.insertAdjacentHTML('beforebegin',
                 '<p class="invalid-input">Please input valid number<p/>');
+            p1BtnElm.setAttribute('disabled', 'disabled');
+            p2BtnElm.setAttribute('disabled', 'disabled');
         }
 
     } else {
         if (document.querySelector('.invalid-input')) {
             document.querySelector('.invalid-input').remove();
         }
+
 
         winScore = +inputElm.value; //'+'convert into number
         winScoreElm.textContent = winScore;
@@ -48,30 +51,36 @@ formElm.addEventListener('submit', e => {
 
 
 p1BtnElm.addEventListener('click', e => {
-    if ('player1') {
-        p1Score++;
-        p1ScoreElm.textContent = p1Score;
-        //turn = 'player2';
-        p1BtnElm.setAttribute('disabled', 'disabled');
-        p2BtnElm.removeAttribute('disabled');
+    if (winScore > 0) {
 
-        checkWinner();
+
+        if ('player1') {
+            p1Score++;
+            p1ScoreElm.textContent = p1Score;
+            //turn = 'player2';
+            p1BtnElm.setAttribute('disabled', 'disabled');
+            p2BtnElm.removeAttribute('disabled');
+
+            checkWinner();
+        }
     }
 
 })
 
 
 p2BtnElm.addEventListener('click', e => {
-    if ('player2') {
-        p2Score++;
-        p2ScoreElm.textContent = p2Score;
-        // turn = 'player1';
-        p2BtnElm.setAttribute('disabled', 'disabled');
-        p1BtnElm.removeAttribute('disabled');
-        checkWinner();
+    if (winScore > 0) {
+        if ('player2') {
+            p2Score++;
+            p2ScoreElm.textContent = p2Score;
+            //turn = 'player1';
+            p2BtnElm.setAttribute('disabled', 'disabled');
+            p1BtnElm.removeAttribute('disabled');
+            checkWinner();
+        }
     }
-
 })
+
 
 
 function checkWinner() {
@@ -100,7 +109,7 @@ function displayWinner(p1WinnerState, p2WinnerState) {
 
 
 restBtnElm.addEventListener('click', e => {
-    winScore = 20;
+    winScore = 0;
     initialPlayState();
 })
 
