@@ -110,6 +110,10 @@ function displayWinner(p1WinnerState, p2WinnerState) {
 
 restBtnElm.addEventListener('click', e => {
     winScore = 0;
+    if (document.querySelector('.invalid-input')) {
+        document.querySelector('.invalid-input').remove();
+        document.querySelector('#input').value = '';
+    }
     initialPlayState();
 })
 
